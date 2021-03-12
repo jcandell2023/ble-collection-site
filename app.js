@@ -12,6 +12,9 @@ let coordInd = 0
 const directions = ['N', 'E', 'S', 'W']
 let dirInd = 0
 
+let timerStart = Date.now()
+let timerInterval
+
 function switchDataCollect() {
     constDir = document.querySelector('input[name="dir"]:checked').value
     if (constDir === 'x') {
@@ -34,11 +37,14 @@ function switchDataCollect() {
     document.getElementById('currY').innerText =
         typeof yCoords === 'number' ? yCoords : yCoords[0]
     document.getElementById('currDir').innerText = directions[0]
+    document.getElementById('timer').innerText = '0.0'
     addCSVHead()
 }
 
 function startButton() {
     const timestamp = getTimestamp()
+    timerStart = Date.now()
+    timerInterval = window.setInterval(setTimer, 50)
     const x = typeof xCoords === 'number' ? xCoords : xCoords[coordInd]
     const y = typeof yCoords === 'number' ? yCoords : yCoords[coordInd]
     const dir = directions[dirInd]
@@ -53,6 +59,7 @@ function startButton() {
 
 function stopButton() {
     const timestamp = getTimestamp()
+    window.clearInterval(timerInterval)
     const x = typeof xCoords === 'number' ? xCoords : xCoords[coordInd]
     const y = typeof yCoords === 'number' ? yCoords : yCoords[coordInd]
     const dir = directions[dirInd]
@@ -120,4 +127,11 @@ function reset() {
     coordInd = 0
     dirInd = 0
     document.getElementById('table-body').innerHTML = ''
+}
+
+function setTimer() {
+    document.getElementById('timer').innerText = (
+        (Date.now() - timerStart) /
+        1000
+    ).toFixed(1)
 }
