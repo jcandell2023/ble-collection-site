@@ -1,6 +1,8 @@
 document.getElementById('beginButton').addEventListener('click', switchDataCollect)
 document.getElementById('collectStart').addEventListener('click', startButton)
 document.getElementById('collectStop').addEventListener('click', stopButton)
+document.getElementById('downloadButton').addEventListener('click', downloadCSV)
+
 let index = 1
 let csv = ''
 let constDir = 'x'
@@ -69,7 +71,7 @@ function getTimestamp() {
 }
 
 function addCSVHead() {
-    csv = 'Index,Timestamp,X,Y,Direction,s/e'
+    csv = 'Index,Timestamp,X,Y,Direction,s/e\n'
 }
 
 function addToCSV(index, timestamp, x, y, dir, se) {
@@ -99,4 +101,23 @@ function nextPos() {
     document.getElementById('currDir').innerText = directions[dirInd]
 }
 
-function downloadCSV() {}
+function downloadCSV() {
+    let link = document.createElement('a')
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv))
+    link.setAttribute('download', 'data.csv')
+    link.click()
+    reset()
+    document.getElementById('entry').style.display = 'block'
+    document.getElementById('collection').style.display = 'none'
+}
+
+function reset() {
+    index = 1
+    csv = ''
+    constDir = 'x'
+    xCoords = 0
+    yCoords = 0
+    coordInd = 0
+    dirInd = 0
+    document.getElementById('table-body').innerHTML = ''
+}
