@@ -74,7 +74,7 @@ function stopButton() {
 }
 
 function getTimestamp() {
-    return new Date().toISOString()
+    return new Date().toLocalISOString()
 }
 
 function addCSVHead() {
@@ -83,7 +83,6 @@ function addCSVHead() {
 
 function addToCSV(index, timestamp, x, y, dir, se) {
     csv += `${index},${timestamp},${x},${y},${dir},${se}\n`
-    console.log(csv)
 }
 
 function nextPos() {
@@ -134,4 +133,28 @@ function setTimer() {
         (Date.now() - timerStart) /
         1000
     ).toFixed(1)
+}
+
+Date.prototype.toLocalISOString = function () {
+    var tzo = -this.getTimezoneOffset(),
+        dif = tzo >= 0 ? '+' : '-',
+        pad = function (num) {
+            var norm = Math.floor(Math.abs(num))
+            return (norm < 10 ? '0' : '') + norm
+        }
+    return (
+        this.getFullYear() +
+        '-' +
+        pad(this.getMonth() + 1) +
+        '-' +
+        pad(this.getDate()) +
+        'T' +
+        pad(this.getHours()) +
+        ':' +
+        pad(this.getMinutes()) +
+        ':' +
+        pad(this.getSeconds()) +
+        '.' +
+        (this.getMilliseconds() / 1000).toFixed(3).slice(2, 5)
+    )
 }
