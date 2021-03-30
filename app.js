@@ -3,18 +3,16 @@ document.getElementById('collectStart').addEventListener('click', startButton)
 document.getElementById('collectStop').addEventListener('click', stopButton)
 document.getElementById('downloadButton').addEventListener('click', downloadCSV)
 
-document.getElementById("x").addEventListener("change",testingAcross,false);
-document.getElementById("y").addEventListener("change",testingAcross,false);
+document.getElementById('x').addEventListener('change', testingAcross, false)
+document.getElementById('y').addEventListener('change', testingAcross, false)
 
 function testingAcross() {
     dir = document.querySelector('input[name="dir"]:checked').value
-    if (dir == "x") {
-        document.getElementById("dirSpan").innerHTML = "Y"
+    if (dir == 'x') {
+        document.getElementById('dirSpan').innerHTML = 'Y'
+    } else {
+        document.getElementById('dirSpan').innerHTML = 'X'
     }
-    else {
-        document.getElementById("dirSpan").innerHTML = "X"
-    }
-    
 }
 
 let index = 1
